@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "924398739366",
+    "firebase_url": "https://pruebas-a5600-default-rtdb.firebaseio.com",
+    "project_id": "pruebas-a5600",
+    "storage_bucket": "pruebas-a5600.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924398739366:android:a02144b8033b947811b967",
+        "android_client_info": {
+          "package_name": "com.example.androiddesdecero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924398739366-5vu2m7u2n6ae3jda051o32vs16pi0ufc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY9aprLT81QJkEjSdUMvxvpELX-eYSaW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924398739366-5vu2m7u2n6ae3jda051o32vs16pi0ufc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
