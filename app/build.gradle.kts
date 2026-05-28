@@ -77,6 +77,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("androidx.compose.material3:material3:1.3.2")
 
+    //admob
+    implementation("com.google.android.gms:play-services-ads:24.7.0")
 
     // Credential Manager (recomendado desde 2023)
     implementation("androidx.credentials:credentials:1.3.0")
