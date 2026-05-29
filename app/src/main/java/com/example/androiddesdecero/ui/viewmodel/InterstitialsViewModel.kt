@@ -51,7 +51,7 @@ class InterstitialsViewModel : ViewModel() {
         )
     }
 
-    fun mostrarAnuncio(contex: Context){
+    fun mostrarAnuncio(contex: Context,finish:()->Unit){
         /*
         Para poder mostrar un anuncio utilizamos el método show este recibe como
         parametro una actividad
@@ -67,6 +67,7 @@ class InterstitialsViewModel : ViewModel() {
                     //le indicamos que no tenemos otro anuncio para mostrar
                     interstitialAd.value= null
                     solicitarAnuncio(contex)
+                    finish()
                 }
             }
             interstitialAd.value?.show(activity)

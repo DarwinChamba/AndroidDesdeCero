@@ -70,6 +70,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
 
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+    //se utiliza para mostrar animaciones
     implementation("com.airbnb.android:lottie-compose:6.4.0")
 
     //notificaciones
