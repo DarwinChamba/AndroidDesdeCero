@@ -2,11 +2,27 @@ package com.example.androiddesdecero.util
 
 import android.content.Context
 import android.net.Uri
+import coil.util.CoilUtils.result
+import com.example.androiddesdecero.model.Product
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.io.File
 import java.io.FileOutputStream
+import java.util.UUID
 
 
 class ImageManager {
+    /*
+    creamos una referencia de la base de datos que apunte al nodo product
+
+    https://pruebas-a5600-default-rtdb.firebaseio.com/product/sdfsdds/
+    id:ewrre
+    name:"laptop"
+    image:"dsf"
+     */
+    val reference = FirebaseDatabase.getInstance().getReference("product")
 
     fun uriToPath(context: Context, uri: Uri): String {
         /*
@@ -18,11 +34,47 @@ class ImageManager {
 
          */
         val file = File(context.filesDir, "image_${System.currentTimeMillis()}.jpg")
-         val outputStream = FileOutputStream(file)
+        val outputStream = FileOutputStream(file)
         inputStream?.copyTo(outputStream)
         inputStream?.close()
         outputStream.close()
-        return  file.absolutePath
+        return file.absolutePath
 
+    }
+
+    fun insert(product: Product,producState:(ProductState<String>)->Unit) {
+        val id = UUID.randomUUID().toString()
+        producState(ProductState.Loading)
+        reference.child(id).setValue(product.copy(id=id)).addOnSuccessListener {
+            producState(ProductState.Success("registro realizado con exito"))
+        }.addOnFailureListener {
+            producState(ProductState.Error(it.message.toString()))
+        }
+    }
+
+    fun getAllProduct(result:(ProductState<List<Product>>)->Unit){
+        result(ProductState.Loading)
+        reference.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(data: DataSnapshot) {
+                if(data.exists()){
+                    val lista = mutableListOf<Product>()
+                    for(d in data.children){
+                        val product = d.getValue(Product::class.java)
+                        product?.let {
+                            lista.add(it)
+                            println(it)
+                        }
+                    }
+                    result(ProductState.Success(lista))
+                }else{
+              result(ProductState.Error("No hay productos"))
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                result(ProductState.Error(error.message))
+            }
+
+        })
     }
 }
