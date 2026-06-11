@@ -66,6 +66,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("androidx.compose.material:material-icons-core:1.7.8")
+    //dependencia para mostrar imágenes
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("com.google.firebase:firebase-auth-ktx")
 
@@ -74,6 +75,7 @@ dependencies {
     implementation("com.airbnb.android:lottie-compose:6.4.0")
 
     //notificaciones
+
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("androidx.compose.material3:material3:1.3.2")

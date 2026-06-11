@@ -1,6 +1,7 @@
 package com.example.androiddesdecero
 
 import android.Manifest
+import android.R.id.message
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -9,21 +10,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import com.example.androiddesdecero.ui.navigation.NavGraph
-import com.example.androiddesdecero.ui.screen.HomeScreen
 import com.example.androiddesdecero.ui.theme.AndroidDesdeCeroTheme
-import com.example.androiddesdecero.util.NotificationHelper
+
 import com.google.android.gms.ads.MobileAds
+import com.example.androiddesdecero.ui.screens.LoadingScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -37,14 +29,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         MobileAds.initialize(this)
         solicitarPermisos()
-        NotificationHelper.createChannel(this)
+        //NotificationHelper.createChannel(this)
 
         // Intent cuando la app estaba cerrada
         val intentActual = intent.getStringExtra("notification")
 
         setContent {
 
-            NavGraph(intentActual)
+            NavGraph()
         }
     }
 
@@ -62,3 +54,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
+
