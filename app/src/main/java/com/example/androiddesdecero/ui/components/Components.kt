@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -66,11 +67,15 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import coil.compose.AsyncImage
+import com.example.androiddesdecero.model.Product
 import com.example.androiddesdecero.util.DrawerState
 import com.example.androiddesdecero.util.IconState
 
@@ -89,27 +94,74 @@ fun TextFieldU() {
         trailingIcon = {
             Icon(
                 imageVector = Icons.Default.Person,
-                contentDescription="",
+                contentDescription = "",
                 tint = Color.Blue
             )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Build,
-                contentDescription="",
+                contentDescription = "",
                 tint = Color.Red
             )
         }
     )
 }
 
+@Composable
+fun TitleProduct(text: String) {
+    Text(
+        text,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Blue
+    )
+}
 
 @Composable
-fun TextFieldUi(value:String,
-                onValueChange: (String) -> Unit) {
+fun CardProduct(product: Product, select: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .clickable {
+                select()
+            },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        shape = RoundedCornerShape(7.dp),
+        elevation = CardDefaults.cardElevation(10.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                product.name,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            if (product.image.isNotEmpty()) {
+                AsyncImage(
+                    model = product.image,
+                    contentDescription = "",
+                    modifier = Modifier.size(100.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TextFieldUi(
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     OutlinedTextField(
-        value =value ,
-        onValueChange =onValueChange,
+        value = value,
+        onValueChange = onValueChange,
         placeholder = {
             Text("Ingrese el nombre del producto")
         },
@@ -117,18 +169,41 @@ fun TextFieldUi(value:String,
         trailingIcon = {
             Icon(
                 imageVector = Icons.Default.Person,
-                contentDescription="",
-                tint = Color.Blue
+                contentDescription = "",
+                tint = Color.Gray
             )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Build,
-                contentDescription="",
-                tint = Color.Red
+                contentDescription = "",
+                tint = Color.Gray
             )
         }
     )
+}
+
+@Composable
+fun SeleccionarImage(image: () -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            "Seleccionar Imagen",
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Bold,
+            color = Color.DarkGray
+        )
+        IconButton(onClick = image) {
+
+            Icon(
+                painter = painterResource(R.drawable.ic_image),
+                contentDescription = "",
+                tint = Color(0xFF18D265)
+            )
+        }
+    }
+
 }
 
 

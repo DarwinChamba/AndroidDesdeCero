@@ -42,6 +42,13 @@ class ImageManager {
 
     }
 
+    fun deleteImageLocal(image:String){
+        val image =File(image)
+        if(image.exists()){
+            image.delete()
+        }
+    }
+
     fun insert(product: Product,producState:(ProductState<String>)->Unit) {
         val id = UUID.randomUUID().toString()
         producState(ProductState.Loading)
@@ -76,5 +83,15 @@ class ImageManager {
             }
 
         })
+    }
+
+    fun updateProduct(product: Product,producState:(ProductState<String>)->Unit) {
+
+        producState(ProductState.Loading)
+        reference.child(product.id).setValue(product).addOnSuccessListener {
+            producState(ProductState.Success("registro modificado con exito"))
+        }.addOnFailureListener {
+            producState(ProductState.Error(it.message.toString()))
+        }
     }
 }

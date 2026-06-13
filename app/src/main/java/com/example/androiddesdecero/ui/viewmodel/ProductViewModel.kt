@@ -20,15 +20,20 @@ class ProductViewModel : ViewModel() {
     val uriImage: StateFlow<Uri?> get() = _uriImage
 
     private val _result = MutableStateFlow<ProductState<String>>(ProductState.Idle)
-    val  result : StateFlow<ProductState<String>> get() = _result
+    val result: StateFlow<ProductState<String>> get() = _result
+
+    private val _allProduct = MutableStateFlow<ProductState<List<Product>>>(ProductState.Idle)
+    val allProduct: StateFlow<ProductState<List<Product>>> get() = _allProduct
+
+val isEditing = MutableStateFlow(false)
 
     init {
-      getAllProduct()
+        getAllProduct()
     }
 
-    fun getAllProduct(){
-        imageManager.getAllProduct{
-
+    fun getAllProduct() {
+        imageManager.getAllProduct {
+            _allProduct.value = it
         }
     }
 
@@ -42,27 +47,49 @@ class ProductViewModel : ViewModel() {
         _uriImage.value = uri
     }
 
-    fun insertProduct(context: Context){
-        _uriImage.value?.let {uri->
-            val ruta =imageManager.uriToPath(context,uri)
+    fun updateProduct(context: Context) {
+        if (_product.value.image.isNotEmpty()) {
+            imageManager.deleteImageLocal(_product.value.image)
+        }
+        _uriImage.value?.let { uri ->
+            val ruta = imageManager.uriToPath(context, uri)
+            _product.update {
+                it.copy(image = ruta)
+            }
+        }
+        imageManager.updateProduct(_product.value) {
+            _result.value = it
+        }
+    }
+    /*
+    https://github.com/DarwinChamba/AndroidDesdeCero
+     */
+
+    fun insertProduct(context: Context) {
+        _uriImage.value?.let { uri ->
+            val ruta = imageManager.uriToPath(context, uri)
             _product.update {
                 it.copy(image = ruta)
             }
         }
 
-        imageManager.insert(_product.value){
+        imageManager.insert(_product.value) {
             _result.value = it
         }
         reset()
     }
 
-    fun reset(){
+    fun setProduct(product: Product) {
+        _product.value = product
+        isEditing.value = true
+    }
+
+    fun reset() {
         _result.value = ProductState.Idle
         _uriImage.value = null
         _product.value = Product()
+        isEditing.value = false
     }
-
-
 
 
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import com.example.androiddesdecero.ui.navigation.NavGraph
+import com.example.androiddesdecero.ui.navigation.NavGraphProduct
 import com.example.androiddesdecero.ui.screen.HomeScreen
 import com.example.androiddesdecero.ui.theme.AndroidDesdeCeroTheme
 import com.example.androiddesdecero.util.NotificationHelper
@@ -44,7 +45,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            NavGraph(intentActual)
+           // NavGraph(intentActual)
+            NavGraphProduct()
         }
     }
 
